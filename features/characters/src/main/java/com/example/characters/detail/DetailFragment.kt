@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.characters.databinding.FragmentDetailBinding
 import com.example.domain.models.Character
@@ -55,15 +56,20 @@ class DetailFragment : Fragment() {
 
             binding.characterDetailLoading.visibility = View.GONE
             binding.characterDetailInfo.visibility = View.VISIBLE
+            binding.characterDetailError.visibility = View.GONE
         }
     }
 
     private fun showLoading() {
         binding.characterDetailLoading.visibility = View.VISIBLE
+        binding.characterDetailError.visibility = View.GONE
         binding.characterDetailInfo.visibility = View.GONE
     }
 
     private fun showError() {
-        binding.characterDetailInfo.visibility = View.VISIBLE
+        binding.characterDetailError.visibility = View.VISIBLE
+        binding.characterDetailLoading.visibility = View.GONE
+        binding.characterDetailInfo.visibility = View.GONE
+        (activity as BaseActivity).showAlertDialog {}
     }
 }

@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MarvelRepositoryImpl @Inject constructor(private val marvelService: MarvelService) : MarvelRepository {
-    override suspend fun getCharacters(): Flow<CharacterDataWrapperResponse> = flow {
+    override suspend fun getCharacters(offset: Int): Flow<CharacterDataWrapperResponse> = flow {
         try {
-            val response = marvelService.getCharacters()
+            val response = marvelService.getCharacters(offset)
             emit(response)
         } catch (e: Exception) {
             throw e

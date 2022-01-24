@@ -12,7 +12,7 @@ import javax.inject.Inject
 class GetCharactersUseCase @Inject constructor(private val repositoryImpl: MarvelRepositoryImpl, private val mapper: Mapper) {
 
     suspend fun getCharacters(): Flow<CharacterDataContainer> = flow {
-        repositoryImpl.getCharacters().catch { error ->
+        repositoryImpl.getCharacters(0).catch { error ->
             throw error
         }.collect {
             val mappedResponse = mapper.map(it.characterDataContainer)

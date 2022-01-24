@@ -2,19 +2,15 @@ package com.example.characters.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.characters.databinding.ItemCharacterBinding
 import com.example.domain.models.Character
 import com.example.utils.buildImageUrl
 
-class CharactersRvAdapter : RecyclerView.Adapter<CharactersRvAdapter.CharacterViewHolder>() {
-
-    var items = mutableListOf<Character>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class CharactersRvAdapter : PagingDataAdapter<Character, CharactersRvAdapter.CharacterViewHolder>(DIFF) {
 
     var itemClickListener: (Character) -> Unit = {}
 
@@ -24,11 +20,7 @@ class CharactersRvAdapter : RecyclerView.Adapter<CharactersRvAdapter.CharacterVi
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(items[position])
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
+        getItem(position)?.let { holder.bind(it) }
     }
 
     inner class CharacterViewHolder(private val viewBinding: ItemCharacterBinding) : RecyclerView.ViewHolder(viewBinding.root) {
@@ -46,4 +38,11 @@ class CharactersRvAdapter : RecyclerView.Adapter<CharactersRvAdapter.CharacterVi
             }
         }
     }
+
+    object DIFF : DiffUtil.ItemCallback<Character>() {
+        override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean = oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean = oldItem == newItem
+    }
+
 }

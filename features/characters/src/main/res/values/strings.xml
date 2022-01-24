@@ -1,4 +1,7 @@
 <resources>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="character_detail_error">An error happened retrieving character info</string>
+    <string name="characters_list_error">An error loading characters list happened</string>
+    <string name="label_retry">Retry</string>
 </resources>
